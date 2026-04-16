@@ -1,0 +1,33 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          xcodebuild -project mmaipad.xcodeproj \
+            -scheme mmaipad \
+            -configuration Release \
+            -derivedDataPath build \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Package
+        run: |
+          cp -R build/Build/Products/Release/mmaipad.app AIPortals.app
+          zip -r AIPortals-${{ github.ref_name }}.zip AIPortals.app
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: AIPortals-${{ github.ref_name }}.zip
