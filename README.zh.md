@@ -2,6 +2,8 @@
 
 一款原生 macOS 应用，将所有常用 AI 工具整合到一个窗口。通过侧边栏一键切换 AI 服务，告别反复切换浏览器标签页。
 
+![AIPortals 截图](SHOT.png)
+
 ## 功能特性
 
 - **一键切换** — 侧边栏直接切换 AI 工具
@@ -32,7 +34,7 @@
 ## 从源码构建
 
 ```bash
-git clone https://github.com/your-username/AIPortals.git
+git clone https://github.com/lovelinessmoe/AIPortals.git
 cd AIPortals
 open mmaipad.xcodeproj
 ```

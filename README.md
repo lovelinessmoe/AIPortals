@@ -2,6 +2,8 @@
 
 A native macOS app that brings all your favorite AI tools into one place. Switch between AI services instantly from the sidebar — no more juggling browser tabs.
 
+![AIPortals Screenshot](SHOT.png)
+
 ## Features
 
 - **One-click switching** between AI tools via sidebar
@@ -32,9 +34,13 @@ A native macOS app that brings all your favorite AI tools into one place. Switch
 ## Build from Source
 
 ```bash
-git clone https://github.com/your-username/AIPortals.git
+git clone https://github.com/lovelinessmoe/AIPortals.git
 cd AIPortals
 open mmaipad.xcodeproj
 ```
 
 Then press `⌘R` in Xcode to run.
+
+---
+
+[中文文档](README.zh.md)
