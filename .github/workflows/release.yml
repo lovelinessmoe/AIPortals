@@ -22,12 +22,20 @@ jobs:
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO
 
-      - name: Package
+      - name: Package DMG
         run: |
           cp -R build/Build/Products/Release/AIPortals.app AIPortals.app
-          zip -r AIPortals-${{ github.ref_name }}.zip AIPortals.app
+          brew install create-dmg
+          create-dmg \
+            --volname "AIPortals" \
+            --window-size 600 400 \
+            --icon-size 128 \
+            --icon "AIPortals.app" 150 185 \
+            --app-drop-link 450 185 \
+            "AIPortals-${{ github.ref_name }}.dmg" \
+            "AIPortals.app"
 
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: AIPortals-${{ github.ref_name }}.zip
+          files: AIPortals-${{ github.ref_name }}.dmg
