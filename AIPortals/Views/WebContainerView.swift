@@ -7,7 +7,10 @@ final class WebViewCache {
 
     func webView(for site: AISite) -> WKWebView {
         if let existing = cache[site.id] { return existing }
-        let wv = WKWebView(frame: .zero)
+        let config = WKWebViewConfiguration()
+        // 每个站点用固定 UUID 作为持久化存储标识，跨版本更新不丢失
+        config.websiteDataStore = WKWebsiteDataStore(forIdentifier: site.id)
+        let wv = WKWebView(frame: .zero, configuration: config)
         wv.autoresizingMask = [.width, .height]
         wv.allowsBackForwardNavigationGestures = true
         if let url = URL(string: site.urlString) {
