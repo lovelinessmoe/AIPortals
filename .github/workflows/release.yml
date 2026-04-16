@@ -14,8 +14,8 @@ jobs:
 
       - name: Build
         run: |
-          xcodebuild -project mmaipad.xcodeproj \
-            -scheme mmaipad \
+          xcodebuild -project AIPortals.xcodeproj \
+            -scheme AIPortals \
             -configuration Release \
             -derivedDataPath build \
             CODE_SIGN_IDENTITY="" \
@@ -24,7 +24,7 @@ jobs:
 
       - name: Package
         run: |
-          cp -R build/Build/Products/Release/mmaipad.app AIPortals.app
+          cp -R build/Build/Products/Release/AIPortals.app AIPortals.app
           zip -r AIPortals-${{ github.ref_name }}.zip AIPortals.app
 
       - name: Release

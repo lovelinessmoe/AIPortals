@@ -13,7 +13,7 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0F6557A72F90F49900E1204A /* mmaipad */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = mmaipad;
+			path = AIPortals;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
