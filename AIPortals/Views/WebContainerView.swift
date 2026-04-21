@@ -48,6 +48,7 @@ private struct _WebView: NSViewRepresentable {
         let container = NSView()
         let webView = WebViewCache.shared.webView(for: site)
         webView.navigationDelegate = context.coordinator
+        webView.uiDelegate = context.coordinator
         webView.frame = container.bounds
         container.addSubview(webView)
         isLoading = webView.isLoading
@@ -57,6 +58,7 @@ private struct _WebView: NSViewRepresentable {
     func updateNSView(_ container: NSView, context: Context) {
         let webView = WebViewCache.shared.webView(for: site)
         webView.navigationDelegate = context.coordinator
+        webView.uiDelegate = context.coordinator
         if webView.superview !== container {
             container.subviews.forEach { $0.removeFromSuperview() }
             webView.frame = container.bounds
@@ -67,7 +69,7 @@ private struct _WebView: NSViewRepresentable {
         isLoading = webView.isLoading
     }
 
-    class Coordinator: NSObject, WKNavigationDelegate {
+    class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate {
         @Binding var isLoading: Bool
         init(isLoading: Binding<Bool>) { _isLoading = isLoading }
 
@@ -75,6 +77,20 @@ private struct _WebView: NSViewRepresentable {
         func webView(_ webView: WKWebView, didFinish _: WKNavigation!) { isLoading = false }
         func webView(_ webView: WKWebView, didFail _: WKNavigation!, withError _: Error) { isLoading = false }
         func webView(_ webView: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError _: Error) { isLoading = false }
+
+        // 处理文件上传
+        func webView(_ webView: WKWebView,
+                     runOpenPanelWith parameters: WKOpenPanelParameters,
+                     initiatedByFrame frame: WKFrameInfo,
+                     completionHandler: @escaping ([URL]?) -> Void) {
+            let panel = NSOpenPanel()
+            panel.allowsMultipleSelection = parameters.allowsMultipleSelection
+            panel.canChooseFiles = true
+            panel.canChooseDirectories = false
+            panel.begin { response in
+                completionHandler(response == .OK ? panel.urls : nil)
+            }
+        }
     }
 }
 
